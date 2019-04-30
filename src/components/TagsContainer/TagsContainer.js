@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Checkbox, Button } from 'react-materialize';
 import RootStore from '../../store/rootStore';
-import classes from './TagsContainer.css';
+import './TagsContainer.styl';
 
 const TagsContainer = () => {
   const { store } = useContext(RootStore);
@@ -24,7 +24,7 @@ const TagsContainer = () => {
     store.resetPagination();
   };
   return (
-    <div className={classes.tagContainer}>
+    <div className='tagContainer'>
       <form onSubmit={(event) => {
         event.preventDefault();
       }}

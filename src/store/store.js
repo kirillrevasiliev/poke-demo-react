@@ -57,6 +57,8 @@ class Store {
     this.state = 'pending';
     this.pokeList = [];
     this.pagination.allPage = 1;
+    const offset = this.pagination.offset;
+    const limit = this.pagination.offset + this.pagination.limit;
     if (this.uid) {
       this.favData = this.favData.length ? this.favData : await this.getFavData(this.uid);
     }
@@ -72,11 +74,11 @@ class Store {
           tempList = tempList.filter(poke => poke.name.toLowerCase().includes(this.filter));
         }
         this.pagination.allPage = Math.ceil(tempList.length / this.pagination.limit);
-        for (const item of tempList.slice(this.pagination.offset, this.pagination.offset + this.pagination.limit)) {
+        for (const item of tempList.slice(offset, limit)) {
           this.pokeList.push(this.checkFavorite(await this.loadPokeItem(item.name), 'star'));
         }
       } else if (this.filter !== '') {
-        await this.fetchFilteringList();
+        await this.fetchFilteringList(offset, limit);
       } else {
         const response = await axios.get('pokemon/', {
           params: {
@@ -98,12 +100,12 @@ class Store {
     }
   }
 
-  fetchFilteringList = async () => {
+  fetchFilteringList = async (offset, limit) => {
     const response = await axios.get('pokemon/', { params: { limit: 1000 } });
     if (response.data.results) {
       const tempList = response.data.results.filter(poke => poke.name.toLowerCase().includes(this.filter));
       this.pagination.allPage = Math.ceil(tempList.length / this.pagination.limit);
-      for (const item of tempList.slice(this.pagination.offset, this.pagination.offset + this.pagination.limit)) {
+      for (const item of tempList.slice(offset, limit)) {
         this.pokeList.push(this.checkFavorite(await this.loadPokeItem(item.name), 'star'));
       }
     }

@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { Col, Card, Collection, CollectionItem, Badge } from 'react-materialize';
-import classes from './PokeCard.css';
+import './PokeCard.styl';
 import FavoriteIcon from '../FavoriteIcon/FavoriteIcon';
 
 export default function PokeCard({ pokemon }) {
@@ -8,8 +8,8 @@ export default function PokeCard({ pokemon }) {
     <Col xl={4} m={6} s={12}>
       <Card
         header={
-          <div className={classes.imageBlock}>
-            <img src={`https://img.pokemondb.net/artwork/${pokemon.name}.jpg`} alt={pokemon.name}/>
+          <div className='imageBlock'>
+            <img className="img" src={`https://img.pokemondb.net/artwork/${pokemon.name}.jpg`} alt={pokemon.name}/>
           </div>
         }
         title={pokemon.name}
